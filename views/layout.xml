@@ -1,0 +1,65 @@
+<odoo>
+
+<template id="externalwni_layout">
+    <!-- Multicompany -->
+    <t t-if="not o and doc">
+        <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+
+    <t t-call="mx_wni.report_headerdor" />
+    <t t-raw="0" />
+    <t t-call="mx_wni.externalwni_layout_footer" />
+</template>
+ <template id="report_headerdor">
+            <div class="header">
+            </div>
+        </template>
+<template id="externalwni_layout_footer">
+    <div class="footer">
+        <div class="text-center" style="border-top: 1px solid black;">
+            <ul t-if="not company.custom_footer" class="list-inline" style="font-size:7pt;">
+                <li t-if="company.phone">Phone: <span t-field="company.phone"/></li>
+
+                <li t-if="company.fax and company.phone">&amp;bull;</li>
+                <li t-if="company.fax">Fax: <span t-field="company.fax"/></li>
+
+                <li t-if="company.email and company.fax or company.email and company.phone">&amp;bull;</li>
+                <li t-if="company.email">Email: <span t-field="company.email"/></li>
+
+                <li t-if="company.website and company.email or company.website and company.fax or company.website and company.phone">&amp;bull;</li>
+                <li t-if="company.website">Website: <span t-field="company.website"/></li>
+            </ul>
+            
+            <table style="width:100%;border:0px solid white; height:100%;font-size:8pt;"  cellspacing="0" cellpadding="0">
+            	<tr>
+            		<td style="font-weight: bold; ">&amp;bull;Banamex-Suc. 8186</td>
+            	
+            		<td  >Cta. Pesos: 0016036 - CLABE:002180818600160366 <br/>
+                	Cta. Dolares: 9000345 - CLABE:002180818690003459</td>
+            	
+            		<td style="font-weight: bold; ">&amp;bull;Banco HSBC-Suc. 063 </td>
+            	
+            		<td >Cta. Pesos: 4032796211 - CLABE:021180040327962117 <br/>
+                	Cta. Dolares: 7002137206 - CLABE:021180070021372060</td>
+            	</tr>
+            </table>
+           <p style="text-align:center; font-size:9pt;"> Agradezco el interés en nuestros productos y servicios</p>
+
+            <ul class="list-inline" style="font-size:7pt;">
+                <li>Page:</li>
+                <li><span class="page"/></li>
+                <li>/</li>
+                <li><span class="topage"/></li>
+            </ul>
+            
+        </div>
+    </div>
+</template>
+</odoo>
+

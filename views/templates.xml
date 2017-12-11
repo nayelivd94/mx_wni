@@ -1,0 +1,235 @@
+<openerp>
+    <data>
+
+
+
+        <record id="view_purchase_form_inherit" model="ir.ui.view">
+            <field name="name">view.purchase.form.add.text.field</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="positondelivery" invisible="1"/>
+                </xpath>
+                <!-- <xpath expr="//field[@name='state']" position="replace">
+                     <field name="state" widget="statusbar" statusbar_visible="draft,sent,purchase,partially_received,received" readonly="1"/>
+                </xpath>
+              <xpath expr="//button[@name='button_done']" position="replace">
+                    <button name="button_done" type="object" string="Lock"  groups="purchase.group_purchase_manager,sales_team.group_sale_manager"
+                       />
+                </xpath>
+
+              <button name="action_rfq_send" states="purchase"  type="object" context="{'send_rfq':False}" position="replace">
+                      <button name="action_rfq_send" states="purchase,partially_received,received" string="Send PO by Email" type="object" context="{'send_rfq':False}"/>
+                </button>-->
+                <xpath expr="//field[@name='incoterm_id']" position="after">
+                    <field name="delivery_id" />
+                </xpath>
+                <xpath expr="//button[@name='button_cancel']" position="replace">
+                    <button name="button_cancel"  string="Cancel" type="object" />
+                </xpath>
+              
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="new_invoicepurchase_tree">
+            <field name="name">wni.purchase.order.tree</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="positondelivery" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+
+        <record id="view_wnimxstockpicking_form_inherit" model="ir.ui.view">
+            <field name="name">view.wnimxstockpicking.form.add.text.field</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='location_dest_id']" position="after">
+                   <field name="wni_pedimento" invisible="1"/>
+                    <field name="wni_datepedimento" invisible="1"/>
+                     <field name="wni_issale" invisible="1"/> 
+                </xpath>
+                <xpath expr="//button[@name='force_assign']" position="replace">
+                   <button name="force_assign" states="confirmed,waiting,partially_available" string="Force Availability" type="object" groups="sales_team.group_sale_manager" />
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="after">
+                   <button name="load_series" states="done,draft,waiting" string="Actualizar Series" type="object" />
+                   <button name="cargar_series"  string="Cargar Series" type="object" attrs="{'invisible': [('state', '=', 'draft')]}" state="confirmed" />
+                   <button name="series_aleatoria"  string="Cargar Series Aleatorias" type="object" attrs="{'invisible': ['|', ('wni_issale', '=', True),('state', '=', 'draft')]}" state="confirmed"/>
+                </xpath>
+                <xpath expr="//notebook/page[@name='extra']/group/group/field[@name='picking_type_id']" position="after">
+                   <field name="valor"/>
+                </xpath>
+             </field>
+        </record>
+        <record id="view_accountinvoicewni_form_inherit" model="ir.ui.view">
+            <field name="name">view.accountinvoicewni.form.add.text.field</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_due']" position="after">
+                   <field name="wni_pedimento" invisible="1"/>
+                   <field name="wni_datepedimento" invisible="1"/>
+                   <field name="aduana" invisible="1"/>   
+                </xpath>
+             </field>
+        </record>
+    <!--
+        <record id="wni_ro_view_order_form_sales_group" model="ir.ui.view">
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="mx_wni.view_salemxwni_form_inherit"/>
+            <field name="groups_id" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='validate']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+            </field>
+        </record>-->
+
+
+        <record id="view_salemxwni_form_inherit" model="ir.ui.view">
+            <field name="name">view.salemxwni.form.add.text.field</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="replace">
+                   <field name="state" widget="statusbar" statusbar_widget="draft,sent,pending,validada,sale"/>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="before">
+                   <button string="Pendiente por validar" type="object" name="pending_validate"   state="draft,sent" attrs="{'invisible': [('state', '!=', 'sent')]}" />
+                    <button string="Validada" type="object" name="validate"   state="pending" attrs="{'invisible': [('state', '!=', 'pending')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="wni_validate" invisible="1"/>
+                </xpath> 
+               
+                 <button name="action_confirm" states="draft"  class="o_sale_confirm" type="object"  position="replace">
+                     <button name="action_confirm" states="validada" string="Confirm Sale" class="o_sale_confirm" type="object" invisible="1"/>
+                </button>
+                 <button name="action_confirm" states="sent"  class="btn-primary o_sale_confirm" type="object" position="replace">
+                    <button name="action_confirm" states="validada" string="Confirm Sale" class="btn-primary o_sale_confirm" type="object" />
+                 </button>
+                 <button name="action_cancel" states="draft,sent,sale" type="object" position="replace">
+                    <button name="action_cancel" states="draft,sent,sale,pending,validada" type="object" string="Cancel"/>
+                </button>
+                <xpath expr="//button[@name='action_done']" position="replace">
+                    <button name="action_done" type="object" string="Lock" states="sale"
+                        help="If the sale is locked, you can not modify it anymore. However, you will still be able to invoice or deliver." invisible="1"/>
+                </xpath>
+             </field>
+        </record>
+        <record id="view_quotationmxwni_form_inherit" model="ir.ui.view">
+            <field name="name">view.quotationmxwni.form.add.text.field</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                   <field name="wni_validate" invisible="1"/>
+                </xpath> 
+             </field>
+        </record>
+        <record id="view_paymentmxwni_form_inherit" model="ir.ui.view">
+            <field name="name">view.paymentmxwni.form.add.text.field</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='journal_id']" position="attributes">
+                   <attribute name="string" >Cuenta de ingreso</attribute> 
+                </xpath> 
+                
+             </field>
+        </record>
+
+        <record id="view_paymentreemxwni_form_inherit" model="ir.ui.view">
+            <field name="name">view.paymentreemxwni.form.add.text.field</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='journal_id']" position="attributes">
+                   <attribute name="string" >Cuenta de ingreso</attribute> 
+                </xpath> 
+                
+             </field>
+        </record>
+        <record id="view_paymentinvoicexwni_form_inherit" model="ir.ui.view">
+            <field name="name">view.paymeninvoicemxwni.form.add.text.field</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='journal_id']" position="attributes">
+                   <attribute name="string" >Cuenta de ingreso</attribute> 
+                </xpath> 
+               
+             </field>
+        </record>
+        <record model="ir.ui.view" id="new_stockpickingtreewni_tree">
+            <field name="name">wni.stock.picking.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <field name="min_date" position="after">
+                    <field name="date_done" />
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="new_stockquantwni_tree">
+            <field name="name">wni.stock.quant.tree</field>
+            <field name="model">stock.quant</field>
+            <field name="inherit_id" ref="stock.view_stock_quant_form"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                    <field name="categ_id" />
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="new_stockquantwnitreee_tree">
+            <field name="name">wni.stock.quanttree.tree</field>
+            <field name="model">stock.quant</field>
+            <field name="inherit_id" ref="stock.view_stock_quant_tree"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                    <field name="categ_id" />
+                </field>
+            </field>
+        </record>
+
+        <record id="stock.quant_search_view" model="ir.ui.view">
+        <field name="name">stock.quant.search</field>
+        <field name="model">stock.quant</field>
+        <field eval="10" name="priority"/>
+        <field name="arch" type="xml">
+            <search string="Inventory Valuation">
+                <field name="product_id"/>
+                <field name="categ_id"/>
+                <field name="location_id"/>
+                <field name="package_id" groups="stock.group_tracking_lot"/>
+                <field name="lot_id" groups="stock.group_production_lot"/>
+                <field name="owner_id" groups="stock.group_tracking_owner"/>
+                <group expand='0' string='Filters'>
+                    <filter name='internal_loc' string="Internal Locations" domain="[('location_id.usage','=', 'internal')]"/>
+                    <filter name='transit_loc' string="Transit Locations" domain="[('location_id.usage' ,'=', 'transit')]"/>
+                    <separator/>
+                    <filter name="negative" string="Negative" domain="[('qty', '&lt;', 0.0)]"/>
+                    <filter name="positive" string="Positive" domain="[('qty', '&gt;', 0.0)]"/>
+                </group>
+                <group expand='0' string='Group by...'>
+                    <filter string='Location' name="locationgroup" domain="[]" context="{'group_by': 'location_id'}"/>
+                    <filter string='Product' name="productgroup" context="{'group_by': 'product_id'}"/>
+                    <filter string='Categoria' name="categgroup" context="{'group_by': 'categ_id'}"/>
+                    <filter string='Owner' context="{'group_by': 'owner_id'}" groups="stock.group_tracking_owner"/>
+                    <filter string='Lot/Serial Number' context="{'group_by': 'lot_id'}" groups="stock.group_production_lot"/>
+                    <filter string='Package' domain="[]" context="{'group_by': 'package_id'}" groups="stock.group_tracking_lot"/>
+                    <filter string='Company' domain="[]" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+               </group>
+            </search>
+        </field>
+    </record>
+    </data>
+</openerp>

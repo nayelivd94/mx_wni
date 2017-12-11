@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+           <!-- report , stock inventories date... start -->
+        <record model="ir.ui.view" id="report_comissions_tree">
+            <field name="name">report.comissions.tree</field>
+            <field name="model">report.comissions</field>
+            <field name="arch" type="xml">
+                <tree string="Reporte de Comisiones" create="false">
+                     <field name="nofactura"/>
+                        <field name="date_invoice"/>
+                        <field name="order"/>
+                        <field name="partner_id" />
+                        <field name="vendedor"/>
+                        <field name="executive"/>
+                        <field name="currency"/>
+                        <field name="monto"/>
+                        <field name="tipo_cambio"/>
+                        <field name="montomxn"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="report_comissions_search">
+            <field name="name">report.comissions.search</field>
+            <field name="model">report.comissions</field>
+            <field name="arch" type="xml">
+                <search string="Reporte de Comisiones">
+                 <field name="date"/>
+                <group expand="1" string="Group By">
+                </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="report_comissions_form">
+            <field name="name">report.comissions.form</field>
+            <field name="model">report.comissions</field>
+            <field name="arch" type="xml">
+                <form string="Reporte de Comisiones">
+                    <group>
+                        <field name="nofactura"/>
+                        <field name="date_invoice"/>
+                        <field name="order"/>
+                        <field name="partner_id" />
+                        <field name="vendedor"/>
+                        <field name="executive"/>
+                        <field name="currency"/>
+                        <field name="monto"/>
+                        <field name="tipo_cambio"/>
+                        <field name="montomxn"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_comissions">
+            <field name="name">Reporte de Comisiones</field>
+            <field name="res_model">report.comissions</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help">Reporte de comisiones...)</field>
+        </record>
+        <menuitem
+            id="menu_comissions_service" name="Comisiones y Servicios"
+            parent="account.menu_finance_reports" sequence="4" />
+
+        <menuitem parent="menu_comissions_service" action="action_comissions" id="menu_report_comissions" sequence="1"
+           />
+
+    </data>
+</odoo>

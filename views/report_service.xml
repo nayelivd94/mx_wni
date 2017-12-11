@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+           <!-- report , stock inventories date... start -->
+        <record model="ir.ui.view" id="report_service_tree">
+            <field name="name">report.service.tree</field>
+            <field name="model">report.service</field>
+            <field name="arch" type="xml">
+                <tree string="Reporte de Servicios" create="false">
+                    <field name="order"/>
+                    <field name="service"/>
+                    <field name="partner_id" />
+                    <field name="executive"/>
+                    <field name="vendedor"/>
+                    <field name="montomxn"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="report_service_search">
+            <field name="name">report.service.search</field>
+            <field name="model">report.service</field>
+            <field name="arch" type="xml">
+                <search string="Reporte de Servicios">
+                 <field name="date"/>
+                <group expand="1" string="Group By">
+                </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="report_service_form">
+            <field name="name">report.service.form</field>
+            <field name="model">report.service</field>
+            <field name="arch" type="xml">
+                <form string="Reporte de Servicios">
+                    <group>
+                        <field name="order"/>
+                        <field name="service"/>
+                        <field name="partner_id" />
+                        <field name="executive"/>
+                        <field name="vendedor"/>
+                        <field name="montomxn"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_service">
+            <field name="name">Reporte de Servicios</field>
+            <field name="res_model">report.service</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help">Reporte de Servicios...</field>
+        </record>
+
+        <menuitem parent="menu_comissions_service" action="action_service" id="menu_report_service" sequence="2"
+           />
+
+    </data>
+</odoo>

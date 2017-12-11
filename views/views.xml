@@ -1,0 +1,38 @@
+<openerp>
+  <data>
+    <record model="ir.ui.view" id="new_stockpickingwni_tree">
+            <field name="name">wni.stock.picking.wni</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="group_id" position="after">
+                    <field name="sale_id" />
+                </field>
+            </field>
+        </record>
+     <record id="view_salewni_form_inherit" model="ir.ui.view">
+            <field name="name">view.salewni.form.add.text.field</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+             
+                 <xpath expr="//group[@name='sales_person']/field[@name='user_id']" position="after">
+                     <field name="deliverys"/>
+                </xpath>
+
+    
+            </field>
+    </record>
+    <!--
+     <record model="ir.ui.view" id="new_companytransferwni_tree">
+            <field name="name">wni.res.company.wni</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <field name="vat" position="after">
+                    <field name="transfer_account_id" />
+                </field>
+            </field>
+        </record>-->
+  </data>
+</openerp>

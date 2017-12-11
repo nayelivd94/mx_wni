@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_serie_tmp,access_serie_tmp,model_serie_tmp,,1,1,1,1
+access_series_aleatorias,access_series_aleatorias,model_series_aleatorias,,1,1,1,1
+access_report_comissions,access_report_comissions,model_report_comissions,,1,1,1,1
+report_comissions,access_report_comissions,model_report_comissions,,1,1,1,1
+access_report_service,access_report_service,model_report_service,,1,1,1,1
+report_service,access_report_service,model_report_service,,1,1,1,1

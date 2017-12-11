@@ -1,0 +1,14 @@
+editar sale_views.xml
+<button name="action_confirm" states="sent" string="Confirm Sale" class="btn-primary o_sale_confirm" type="object" attrs="{'invisible': [('wni_validate', '=',False)]}"
+
+ <record id="action_orders" model="ir.actions.act_window">
+            <field name="name">Sales Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="eiew_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field name="search_view_id" ref="sale_order_view_search_inherit_sale"/>
+            <field name="context">{}</field>
+            <field name="domain">[('state', 'not in', ('draft','pending','validada', 'sent', 'cancel'))]</field>
+
+            result_package_id
