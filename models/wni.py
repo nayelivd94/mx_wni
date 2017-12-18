@@ -54,7 +54,7 @@ class SaleOrder(models.Model):
 			else:
 				envio=str(envio)+"\n"+str(carrier)+str(guia)+"   "
 				#_logger.info(_("ENVIO Y GUIA: \n%s") % (envio))
-		self.deliverys=envio
+		sale.deliverys=envio
 class wni_invoiceline(models.Model):
 
     _inherit = 'account.invoice.line'
@@ -72,8 +72,7 @@ class wni_invoiceline(models.Model):
 #				line.qty_received=line.product_qty
 #				continue
 #			total=line.qty_received
-#			for move in line.move_ids:
-3#				_logger.info(_("ENTROOOO AL for   !!!!!!!!!!!!!!!!!!!!!!!!!!! %s\n") % (total))
+#			for move in line.move_ids:#				_logger.info(_("ENTROOOO AL for   !!!!!!!!!!!!!!!!!!!!!!!!!!! %s\n") % (total))
 #				if move.state=='done':
 #					_logger.info(_("ENTROOOO AL IF de done %s\n") % (total))
 #					if move.product_uom != line.product_uom:
